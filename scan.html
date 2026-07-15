@@ -203,7 +203,9 @@
           document.getElementById("reader").style.display = "none";
           document.getElementById("stopScanner").style.display = "none";
           document.getElementById("switchCameraBtn").style.display = "none";
-          lookupProduct(decodedText);
+          // Clean the scanned value
+          const cleaned = String(decodedText).trim();
+          lookupProduct(cleaned);
         });
       }
     }
@@ -272,6 +274,8 @@
 
     function lookupProduct(code) {
       const resultDiv = document.getElementById("result");
+      code = String(code).trim();
+      alert("Scanned code: [" + code + "]\nDatabase has keys: " + Object.keys(productDB).join(", "));
       const product = productDB[code];
 
       resultDiv.style.display = "block";
