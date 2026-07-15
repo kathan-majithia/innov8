@@ -293,3 +293,63 @@ footer {
     min-width: 100%;
   }
 }
+
+/* Make logo clickable without visual change */
+a.logo, a.logo:hover, a.logo:visited {
+  text-decoration: none;
+  color: #2E7D32;               /* keep original green */
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+/* ---- How it works widget flow ---- */
+.widget-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+.widget-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-width: 80px;
+}
+.circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #E8F5E9;
+  color: #2E7D32;
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 48px;
+  margin-bottom: 0.5rem;
+  border: 2px solid #2E7D32;
+}
+.widget-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1B5E20;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.widget-connector {
+  width: 50px;
+  height: 2px;
+  background: #2E7D32;
+  margin: 0 0.5rem;
+  position: relative;
+  top: -14px;  /* align with circle center */
+}
+@media (max-width: 500px) {
+  .widget-connector {
+    width: 30px;
+  }
+}
