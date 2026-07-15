@@ -207,7 +207,6 @@ function lookupProduct(code) {
   resultDiv.style.display = "block";
 
   if (product) {
-    // CO2 line (only if available)
     let co2Line = '';
     if (product.co2Saved) {
       co2Line = `<div class="impact-line">
@@ -215,13 +214,12 @@ function lookupProduct(code) {
                  </div>`;
     }
 
-    // Highlighted treatment date and shelf life
     const highlightStyle = 'display: inline-block; background: #F1F8E9; padding: 0.2rem 0.8rem; border-radius: 6px; font-weight: 600; color: #2E7D32; margin: 0.2rem 0.4rem 0.2rem 0;';
 
     resultDiv.innerHTML = `
-      <div style="text-align: center; margin-bottom: 1rem;">
-        <h2 style="color:#2E7D32; margin-bottom:0.5rem;">${product.name}</h2>
-        ${product.image ? `<img src="${product.image}" alt="${product.name}" style="max-width:180px; border-radius:12px;">` : ""}
+      <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 1.2rem;">
+        <h2 style="color:#2E7D32; margin-bottom:0.5rem; text-align:center;">${product.name}</h2>
+        ${product.image ? `<img src="${product.image}" alt="${product.name}" style="max-width:180px; width:100%; height:auto; border-radius:12px; display:block;">` : ""}
       </div>
       <p><strong>Facility:</strong> ${product.facility}</p>
       <p><strong>Source:</strong> ${product.source || 'Brazil'}</p>
@@ -237,7 +235,6 @@ function lookupProduct(code) {
       <button class="scan-again-btn" onclick="scanAgain()">Scan Another Product</button>
     `;
   } else {
-    // Unknown product – also clean, no tick
     resultDiv.innerHTML = `
       <h2 style="color:#E65100;">Unknown Product</h2>
       <div class="barcode-number-big">${code}</div>
