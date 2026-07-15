@@ -214,7 +214,7 @@ function lookupProduct(code) {
                  </div>`;
     }
 
-    const highlightStyle = 'display: inline-block; background: #F1F8E9; padding: 0.2rem 0.8rem; border-radius: 6px; font-weight: 600; color: #2E7D32; margin: 0.2rem 0.4rem 0.2rem 0;';
+    const highlightStyle = 'display: inline-block; background: #F1F8E9; padding: 0.2rem 0.8rem; border-radius: 6px; font-weight: 600; color: #2E7D32;';
 
     resultDiv.innerHTML = `
       <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 1.2rem;">
@@ -223,11 +223,10 @@ function lookupProduct(code) {
       </div>
       <p><strong>Facility:</strong> ${product.facility}</p>
       <p><strong>Source:</strong> ${product.source || 'Brazil'}</p>
-      <p>
-        <strong>Treatment date:</strong> <span style="${highlightStyle}">${product.date}</span>
-        <strong>New shelf life:</strong> <span style="${highlightStyle}">${product.shelfLife}</span>
-      </p>
-      <p><span class="result-badge">${product.dose}</span> <span class="result-badge">${product.purpose}</span></p>
+      <p><strong>Treatment date:</strong> <span style="${highlightStyle}">${product.date}</span></p>
+      <p><strong>New shelf life:</strong> <span style="${highlightStyle}">${product.shelfLife}</span></p>
+      <p><strong>Dose:</strong> <span class="result-badge">${product.dose}</span></p>
+      <p><strong>Purpose:</strong> <span class="result-badge">${product.purpose}</span></p>
       <p style="color:#1B5E20; font-weight:600;">${product.safety}</p>
       ${co2Line}
       <p style="margin-top:1rem;"><small>Verified by CNEN – Brazilian Nuclear Energy Commission</small></p>
