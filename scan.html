@@ -181,9 +181,8 @@
   <script>
     const html5QrCode = new Html5Qrcode("reader");
     let scannerRunning = false;
-    let currentFacingMode = "environment"; // start with rear, fallback to user
+    let currentFacingMode = "environment";
 
-    // Toggle between user and environment
     function switchCamera() {
       if (scannerRunning) {
         html5QrCode.stop().then(() => {
@@ -218,23 +217,33 @@
 
       html5QrCode.start(
         { facingMode: facingMode },
-        { fps: 10, qrbox: { width: 250, height: 150 } },
+        {
+          fps: 10,
+          qrbox: { width: 250, height: 150 },
+          // IMPORTANT: Tell it to also scan 1D barcodes, not just QR
+          formatsToSupport: [
+            Html5QrcodeSupportedFormats.EAN_13,
+            Html5QrcodeSupportedFormats.EAN_8,
+            Html5QrcodeSupportedFormats.UPC_A,
+            Html5QrcodeSupportedFormats.UPC_E,
+            Html5QrcodeSupportedFormats.CODE_128,
+            Html5QrcodeSupportedFormats.CODE_39,
+            Html5QrcodeSupportedFormats.QR_CODE
+          ],
+          aspectRatio: 1.0
+        },
         onScanSuccess,
         (errorMessage) => { /* ignore */ }
       ).then(() => {
         scannerRunning = true;
       }).catch(err => {
-        // If requested camera fails, try the other one if not already tried
         if (facingMode === "environment") {
-          // Fallback to user camera
-          console.warn("Environment camera not available, trying user camera...");
           currentFacingMode = "user";
           html5QrCode.stop().finally(() => {
             startScannerWithMode("user");
           });
         } else {
-          // Both failed, show error
-          alert("No camera found. Please make sure your device has a camera and permissions are granted. You can use manual entry below.");
+          alert("No camera found. Please use manual entry.");
           readerDiv.style.display = "none";
           document.getElementById("stopScanner").style.display = "none";
           document.getElementById("switchCameraBtn").style.display = "none";
@@ -244,7 +253,6 @@
     }
 
     function startScanner() {
-      // Try environment first
       startScannerWithMode("environment");
     }
 
