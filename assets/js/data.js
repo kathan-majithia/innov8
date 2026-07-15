@@ -2,7 +2,7 @@ const productDB = {
   "4602441015573": {
   name: "Fresh Vine Tomatoes",
   image: "assets/images/tomato.webp",
-  facility: "FitoLimpo Irradiation Centre, Santos Port",
+  facility: "Irradiare Food Safety Centre, São Paulo",
   date: "2026-07-13",
   dose: "0.8 kGy",
   purpose: "Ripening delay & mould control",
@@ -15,7 +15,7 @@ const productDB = {
 "8901030978456": {
   name: "Tahiti Limes",
   image: "assets/images/lemon.webp",
-  facility: "FitoLimpo Irradiation Centre, Santos Port",
+  facility: "Irradiare Food Safety Centre, São Paulo",
   date: "2026-07-15",
   dose: "0.25 kGy",
   purpose: "Fruit fly disinfestation & mould prevention",
@@ -28,7 +28,7 @@ const productDB = {
 "6291100213146": {
   name: "Long-Grain White Rice",
   image: "assets/images/rice.webp",
-  facility: "FitoLimpo Irradiation Centre, Santos Port",
+  facility: "Irradiare Food Safety Centre, São Paulo",
   date: "2026-06-25",
   dose: "0.8 kGy",
   purpose: "Insect disinfestation (weevils, moths)",
@@ -38,10 +38,10 @@ const productDB = {
   co2Saved: "25 kg per ton",
   safety: "✅ Safe to eat. No residual radiation."
 },
-  "6291100213146": {
+  "8904355401937": {
     name: "Black Pepper Powder",
-    image: "assets/images/pepper.jpg",
-    facility: "FitoLimpo Irradiation Centre, Santos Port",
+    image: "assets/images/pepper.webp",
+    facility: "Irradiare Food Safety Centre, São Paulo",
     date: "2026-07-12",
     dose: "7.0 kGy",
     purpose: "Decontamination (Salmonella, moulds)",
