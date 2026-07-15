@@ -25,55 +25,76 @@
   </nav>
 
   <!-- HERO -->
-  <section class="hero">
-    <h1>Food protected<br>by nuclear science.</h1>
-    <p class="subtitle">
-      Safe irradiation eliminates pests and bacteria, extends shelf life, and reduces waste – without chemicals or cold storage.
-    </p>
-    <a href="scan.html" class="scan-prompt">Scan a product</a>
-  </section>
+<!-- HERO – changed "nuclear science" to yellow -->
+<section class="hero">
+  <h1>Food protected<br>by <span style="color:#F9A825;">nuclear science</span>.</h1>
+  <p class="subtitle">
+    Safe irradiation eliminates pests and bacteria, extends shelf life, and reduces waste – without chemicals or cold storage.
+  </p>
+  <a href="scan.html" class="scan-prompt">Scan a product</a>
+</section>
 
-  <!-- LIVE STATISTICS -->
-  <div class="stats-section">
-    <div class="stat-card">
-      <div class="stat-number" id="productsTreated">0</div>
-      <div class="stat-label">Tonnes treated this month</div>
+<!-- LIVE STATISTICS – fourth card now has id for animation -->
+<div class="stats-section">
+  <div class="stat-card">
+    <div class="stat-number" id="productsTreated">0</div>
+    <div class="stat-label">Tonnes treated this month</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number" id="shelfLifeBoost">0</div>
+    <div class="stat-label">Avg. shelf life increase (days)</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number" id="wastePrevented">0</div>
+    <div class="stat-label">Tonnes of CO₂ prevented</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number" id="farmersSupported">0+</div>
+    <div class="stat-label">Farmers supported</div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS – clean widget flow with icons -->
+<div class="how-it-works">
+  <h2>How it works</h2>
+  <div class="widget-flow">
+    <div class="widget-step">
+      <!-- Package icon (SVG) -->
+      <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="8" y="18" width="40" height="28" rx="4" stroke="#2E7D32" stroke-width="2.5" fill="#E8F5E9"/>
+        <path d="M22 18V8l12 10" stroke="#2E7D32" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M34 18V8L22 18" stroke="#2E7D32" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="20" y1="26" x2="36" y2="26" stroke="#2E7D32" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="20" y1="32" x2="32" y2="32" stroke="#2E7D32" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <span class="widget-label">Package</span>
     </div>
-    <div class="stat-card">
-      <div class="stat-number" id="shelfLifeBoost">0</div>
-      <div class="stat-label">Avg. shelf life increase (days)</div>
+    <div class="widget-connector"></div>
+    <div class="widget-step">
+      <!-- Irradiation symbol (SVG) -->
+      <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="28" cy="28" r="20" stroke="#2E7D32" stroke-width="2.5" fill="#E8F5E9"/>
+        <circle cx="28" cy="28" r="6" fill="#2E7D32"/>
+        <path d="M28 8 L28 20" stroke="#2E7D32" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M28 36 L28 48" stroke="#2E7D32" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M12 28 L24 28" stroke="#2E7D32" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M32 28 L44 28" stroke="#2E7D32" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M16.5 16.5 L25.5 25.5" stroke="#2E7D32" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M30.5 30.5 L39.5 39.5" stroke="#2E7D32" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <span class="widget-label">Irradiate</span>
     </div>
-    <div class="stat-card">
-      <div class="stat-number" id="wastePrevented">0</div>
-      <div class="stat-label">Tonnes of CO₂ prevented</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-number">1,200+</div>
-      <div class="stat-label">Farmers supported</div>
+    <div class="widget-connector"></div>
+    <div class="widget-step">
+      <!-- Safety shield with check (SVG) -->
+      <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M28 4L8 14v16c0 14 20 22 20 22s20-8 20-22V14L28 4z" stroke="#2E7D32" stroke-width="2.5" fill="#E8F5E9"/>
+        <path d="M22 28l4 4 8-8" stroke="#F9A825" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="widget-label">Safe</span>
     </div>
   </div>
-
-  <!-- HOW IT WORKS (clean widget diagram) -->
-  <div class="how-it-works">
-    <h2>How it works</h2>
-    <div class="widget-flow">
-      <div class="widget-step">
-        <div class="circle">1</div>
-        <span class="widget-label">Package</span>
-      </div>
-      <div class="widget-connector"></div>
-      <div class="widget-step">
-        <div class="circle">2</div>
-        <span class="widget-label">Irradiate</span>
-      </div>
-      <div class="widget-connector"></div>
-      <div class="widget-step">
-        <div class="circle">3</div>
-        <span class="widget-label">Safe</span>
-      </div>
-    </div>
-  </div>
-
+</div>
   <!-- FOOTER -->
   <footer>
     <p>© 2026 NucFresh Brazil – A MEPhI HackAtom Project · Russia–Brazil Nuclear Cooperation</p>

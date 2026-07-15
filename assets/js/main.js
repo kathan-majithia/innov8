@@ -16,5 +16,5 @@ window.addEventListener('load', () => {
   animateValue('productsTreated', 0, 1847, 2000, ' t');
   animateValue('shelfLifeBoost', 0, 47, 1500, ' days');
   animateValue('wastePrevented', 0, 2300, 2000, ' t');
-  // Farmers supported is static (1,200+)
+  animateValue('farmersSupported', 0, 1200, 2000, '+');
 });
