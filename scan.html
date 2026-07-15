@@ -207,24 +207,30 @@
       resultDiv.style.display = "block";
 
       if (product) {
+        // Build CO2 line only if available
+        let co2Line = '';
+        if (product.co2Saved) {
+          co2Line = `<div class="impact-line">
+                       <span class="impact-tag">${product.co2Saved} CO₂ saved</span>
+                     </div>`;
+        }
+
         resultDiv.innerHTML = `
-          <h2 style="color:#2E7D32;">${product.name}</h2>
+          <h2 style="color:#2E7D32; margin-bottom:0.5rem;">${product.name}</h2>
           ${product.image ? `<img src="${product.image}" alt="${product.name}" style="max-width:200px;">` : ""}
           <p><strong>Facility:</strong> ${product.facility}</p>
+          <p><strong>Source:</strong> ${product.source || 'Brazil'}</p>
           <p><strong>Treatment date:</strong> ${product.date}</p>
           <p><span class="result-badge">${product.dose}</span> <span class="result-badge">${product.purpose}</span></p>
           <p><strong>New shelf life:</strong> ${product.shelfLife}</p>
           <p style="color:#1B5E20; font-weight:600;">${product.safety}</p>
-          <div class="impact-line">
-            <span class="impact-tag">${product.bacteriaKilled} bacteria killed</span>
-            <span class="impact-tag">${product.wasteReduced} waste reduced</span>
-            <span class="impact-tag">${product.co2Saved} CO₂ saved</span>
-          </div>
+          ${co2Line}
           <p style="margin-top:1rem;"><small>Verified by CNEN – Brazilian Nuclear Energy Commission</small></p>
           <div class="barcode-number-big">${code}</div>
           <button class="scan-again-btn" onclick="scanAgain()">Scan Another Product</button>
         `;
       } else {
+        // Unknown product case unchanged, but remove any checkmark there too
         resultDiv.innerHTML = `
           <h2 style="color:#E65100;">Unknown Product</h2>
           <div class="barcode-number-big">${code}</div>

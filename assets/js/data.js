@@ -1,6 +1,7 @@
 const productDB = {
   "4607011267802": {
   name: "Fresh Vine Tomatoes",
+  source: "Fazenda Santa Luzia, Minas Gerais",
   image: "assets/images/tomato.webp",
   facility: "Irradiare Food Safety Centre, São Paulo",
   date: "2026-07-13",
@@ -14,6 +15,7 @@ const productDB = {
 },
   "4602441015573": {
   name: "Fresh Vine Tomatoes",
+  source: "Fazenda Bela Vista, São Paulo",
   image: "assets/images/tomato.webp",
   facility: "Irradiare Food Safety Centre, São Paulo",
   date: "2026-07-13",
@@ -27,6 +29,7 @@ const productDB = {
 },
 "8901030978456": {
   name: "Tahiti Limes",
+  source: "Cooperativa Agrícola Sul, Rio Grande do Sul",
   image: "assets/images/lemon.webp",
   facility: "Irradiare Food Safety Centre, São Paulo",
   date: "2026-07-15",
@@ -40,6 +43,7 @@ const productDB = {
 },
 "6291100213146": {
   name: "Long-Grain White Rice",
+  source: "Sítio Bela Vista, Bahia",
   image: "assets/images/rice.webp",
   facility: "Irradiare Food Safety Centre, São Paulo",
   date: "2026-06-25",
