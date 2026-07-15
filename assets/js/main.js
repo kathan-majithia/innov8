@@ -12,9 +12,28 @@ function animateValue(id, start, end, duration, suffix = '') {
   window.requestAnimationFrame(step);
 }
 
+function animateShelfLife() {
+  const element = document.getElementById('shelfLifeBoost');
+  if (!element) return;
+  // Step 1: count from 1 to 5 rapidly
+  let count = 0;
+  const interval = setInterval(() => {
+    count++;
+    element.textContent = count + 'x';
+    if (count >= 5) {
+      clearInterval(interval);
+      // Step 2: after a short delay, show the range
+      setTimeout(() => {
+        element.textContent = '2-5x';
+      }, 500);
+    }
+  }, 200); // every 200ms
+}
+
 window.addEventListener('load', () => {
   animateValue('productsTreated', 0, 1847, 2000, ' t');
-  animateValue('shelfLifeBoost', 0, 47, 1500, ' days');
+  // shelf life is now custom animated
+  animateShelfLife();
   animateValue('wastePrevented', 0, 2300, 2000, ' t');
   animateValue('farmersSupported', 0, 1200, 2000, '+');
 });
