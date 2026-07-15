@@ -37,7 +37,7 @@ const productDB = {
   wasteReduced: "12%",
   co2Saved: "25 kg per ton",
   safety: "✅ Safe to eat. No residual radiation."
-}
+},
   "7895678901234": {
     name: "Black Pepper Powder",
     image: "assets/images/pepper.jpg",
