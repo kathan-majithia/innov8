@@ -11,7 +11,7 @@ const productDB = {
   bacteriaKilled: "99.5%",
   wasteReduced: "28%",
   co2Saved: "6 kg per crate",
-  safety: "✅ Safe to eat. No residual radiation."
+  safety: "Safe to eat. No residual radiation."
 },
   "4602441015573": {
   name: "Fresh Vine Tomatoes",
@@ -25,7 +25,7 @@ const productDB = {
   bacteriaKilled: "99.5%",
   wasteReduced: "28%",
   co2Saved: "6 kg per crate",
-  safety: "✅ Safe to eat. No residual radiation."
+  safety: "Safe to eat. No residual radiation."
 },
 "8901030978456": {
   name: "Tahiti Limes",
@@ -39,7 +39,7 @@ const productDB = {
   bacteriaKilled: "99.7%",
   wasteReduced: "22%",
   co2Saved: "4 kg per box",
-  safety: "✅ Safe. No residual radiation."
+  safety: "Safe. No residual radiation."
 },
 "6291100213146": {
   name: "Long-Grain White Rice",
@@ -53,7 +53,7 @@ const productDB = {
   bacteriaKilled: "99.6%",
   wasteReduced: "12%",
   co2Saved: "25 kg per ton",
-  safety: "✅ Safe to eat. No residual radiation."
+  safety: "Safe to eat. No residual radiation."
 },
   "8901058025408": {
     name: "Black Pepper Powder",
@@ -66,6 +66,6 @@ const productDB = {
     bacteriaKilled: "99.99%",
     wasteReduced: "30%",
     co2Saved: "3 kg per container",
-    safety: "✅ Safe. No residual radiation."
+    safety: "Safe. No residual radiation."
   }
 };
