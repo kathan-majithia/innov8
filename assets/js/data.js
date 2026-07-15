@@ -1,4 +1,17 @@
 const productDB = {
+  "4607011267802": {
+  name: "Fresh Vine Tomatoes",
+  image: "assets/images/tomato.webp",
+  facility: "Irradiare Food Safety Centre, São Paulo",
+  date: "2026-07-13",
+  dose: "0.8 kGy",
+  purpose: "Ripening delay & mould control",
+  shelfLife: "2026-08-10",
+  bacteriaKilled: "99.5%",
+  wasteReduced: "28%",
+  co2Saved: "6 kg per crate",
+  safety: "✅ Safe to eat. No residual radiation."
+},
   "4602441015573": {
   name: "Fresh Vine Tomatoes",
   image: "assets/images/tomato.webp",
@@ -38,7 +51,7 @@ const productDB = {
   co2Saved: "25 kg per ton",
   safety: "✅ Safe to eat. No residual radiation."
 },
-  "8904355401937": {
+  "8901058025408": {
     name: "Black Pepper Powder",
     image: "assets/images/pepper.webp",
     facility: "Irradiare Food Safety Centre, São Paulo",
