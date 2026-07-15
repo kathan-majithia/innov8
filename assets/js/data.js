@@ -12,7 +12,7 @@ const productDB = {
   co2Saved: "6 kg per crate",
   safety: "✅ Safe to eat. No residual radiation."
 },
-"8901571006854": {
+"8901030978456": {
   name: "Tahiti Limes",
   image: "assets/images/lemon.webp",
   facility: "FitoLimpo Irradiation Centre, Santos Port",
@@ -25,7 +25,7 @@ const productDB = {
   co2Saved: "4 kg per box",
   safety: "✅ Safe. No residual radiation."
 },
-"7890123456789": {
+"6291100213146": {
   name: "Long-Grain White Rice",
   image: "assets/images/rice.webp",
   facility: "FitoLimpo Irradiation Centre, Santos Port",
@@ -38,7 +38,7 @@ const productDB = {
   co2Saved: "25 kg per ton",
   safety: "✅ Safe to eat. No residual radiation."
 },
-  "7895678901234": {
+  "6291100213146": {
     name: "Black Pepper Powder",
     image: "assets/images/pepper.jpg",
     facility: "FitoLimpo Irradiation Centre, Santos Port",

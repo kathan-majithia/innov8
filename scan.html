@@ -176,137 +176,145 @@
     <p>© 2026 FoodSafe Brazil – A MEPhI HackAtom Project</p>
   </footer>
 
-  <script src="assets/js/html5-qrcode.min.js"></script>
-  <script src="assets/js/data.js"></script>
-  <script>
-    const html5QrCode = new Html5Qrcode("reader");
-    let scannerRunning = false;
-    let currentFacingMode = "environment";
+ <script src="assets/js/html5-qrcode.min.js"></script>
+<script src="assets/js/data.js"></script>
+<script>
+  const html5QrCode = new Html5Qrcode("reader");
+  let scannerRunning = false;
+  let currentFacingMode = "environment";
 
-    function switchCamera() {
-      if (scannerRunning) {
-        html5QrCode.stop().then(() => {
-          scannerRunning = false;
-          currentFacingMode = (currentFacingMode === "environment") ? "user" : "environment";
-          startScannerWithMode(currentFacingMode);
-        });
-      } else {
+  function switchCamera() {
+    if (scannerRunning) {
+      html5QrCode.stop().then(() => {
+        scannerRunning = false;
         currentFacingMode = (currentFacingMode === "environment") ? "user" : "environment";
         startScannerWithMode(currentFacingMode);
-      }
+      });
+    } else {
+      currentFacingMode = (currentFacingMode === "environment") ? "user" : "environment";
+      startScannerWithMode(currentFacingMode);
     }
+  }
 
-    function onScanSuccess(decodedText, decodedResult) {
-      if (scannerRunning) {
-        html5QrCode.stop().then(() => {
-          scannerRunning = false;
-          document.getElementById("reader").style.display = "none";
-          document.getElementById("stopScanner").style.display = "none";
-          document.getElementById("switchCameraBtn").style.display = "none";
-          // Clean the scanned value
-          const cleaned = String(decodedText).trim();
-          lookupProduct(cleaned);
-        });
-      }
-    }
-
-    function startScannerWithMode(facingMode) {
-      const readerDiv = document.getElementById("reader");
-      readerDiv.style.display = "block";
-      document.getElementById("stopScanner").style.display = "inline-block";
-      document.getElementById("switchCameraBtn").style.display = "inline-block";
-      document.getElementById("startScannerBtn").style.display = "none";
-
-      html5QrCode.start(
-        { facingMode: facingMode },
-        {
-          fps: 10,
-          qrbox: { width: 250, height: 150 },
-          // IMPORTANT: Tell it to also scan 1D barcodes, not just QR
-          formatsToSupport: [
-            Html5QrcodeSupportedFormats.EAN_13,
-            Html5QrcodeSupportedFormats.EAN_8,
-            Html5QrcodeSupportedFormats.UPC_A,
-            Html5QrcodeSupportedFormats.UPC_E,
-            Html5QrcodeSupportedFormats.CODE_128,
-            Html5QrcodeSupportedFormats.CODE_39,
-            Html5QrcodeSupportedFormats.QR_CODE
-          ],
-          aspectRatio: 1.0
-        },
-        onScanSuccess,
-        (errorMessage) => { /* ignore */ }
-      ).then(() => {
-        scannerRunning = true;
-      }).catch(err => {
-        if (facingMode === "environment") {
-          currentFacingMode = "user";
-          html5QrCode.stop().finally(() => {
-            startScannerWithMode("user");
-          });
-        } else {
-          alert("No camera found. Please use manual entry.");
-          readerDiv.style.display = "none";
-          document.getElementById("stopScanner").style.display = "none";
-          document.getElementById("switchCameraBtn").style.display = "none";
-          document.getElementById("startScannerBtn").style.display = "block";
-        }
+  function onScanSuccess(decodedText, decodedResult) {
+    if (scannerRunning) {
+      html5QrCode.stop().then(() => {
+        scannerRunning = false;
+        document.getElementById("reader").style.display = "none";
+        document.getElementById("stopScanner").style.display = "none";
+        document.getElementById("switchCameraBtn").style.display = "none";
+        // Clean the scanned value
+        const cleaned = String(decodedText).trim();
+        lookupProduct(cleaned);
       });
     }
+  }
 
-    function startScanner() {
-      startScannerWithMode("environment");
-    }
+  function startScannerWithMode(facingMode) {
+    const readerDiv = document.getElementById("reader");
+    readerDiv.style.display = "block";
+    document.getElementById("stopScanner").style.display = "inline-block";
+    document.getElementById("switchCameraBtn").style.display = "inline-block";
+    document.getElementById("startScannerBtn").style.display = "none";
 
-    document.getElementById("startScannerBtn").addEventListener("click", startScanner);
-    document.getElementById("stopScanner").addEventListener("click", () => {
-      if (scannerRunning) {
-        html5QrCode.stop().then(() => {
-          scannerRunning = false;
-          document.getElementById("reader").style.display = "none";
-          document.getElementById("stopScanner").style.display = "none";
-          document.getElementById("switchCameraBtn").style.display = "none";
-          document.getElementById("startScannerBtn").style.display = "block";
+    html5QrCode.start(
+      { facingMode: facingMode },
+      {
+        fps: 5,
+        qrbox: { width: 300, height: 200 },
+        aspectRatio: 1.5,
+        formatsToSupport: [
+          Html5QrcodeSupportedFormats.EAN_13,
+          Html5QrcodeSupportedFormats.EAN_8,
+          Html5QrcodeSupportedFormats.UPC_A,
+          Html5QrcodeSupportedFormats.CODE_128,
+          Html5QrcodeSupportedFormats.CODE_39
+        ],
+        disableFlip: false
+      },
+      onScanSuccess,
+      (errorMessage) => { /* ignore */ }
+    ).then(() => {
+      scannerRunning = true;
+    }).catch(err => {
+      if (facingMode === "environment") {
+        currentFacingMode = "user";
+        html5QrCode.stop().finally(() => {
+          startScannerWithMode("user");
         });
+      } else {
+        alert("No camera found. Please use manual entry.");
+        readerDiv.style.display = "none";
+        document.getElementById("stopScanner").style.display = "none";
+        document.getElementById("switchCameraBtn").style.display = "none";
+        document.getElementById("startScannerBtn").style.display = "block";
       }
     });
-    document.getElementById("switchCameraBtn").addEventListener("click", switchCamera);
+  }
 
-    function lookupProduct(code) {
-      const resultDiv = document.getElementById("result");
-      code = String(code).trim();
-      alert("Scanned code: [" + code + "]\nDatabase has keys: " + Object.keys(productDB).join(", "));
-      const product = productDB[code];
+  function startScanner() {
+    startScannerWithMode("environment");
+  }
 
-      resultDiv.style.display = "block";
+  // ------- NEW FUNCTION: Scan Again -------
+  function scanAgain() {
+    // Hide the result card
+    document.getElementById("result").style.display = "none";
+    // Show the Start Scanner button again (user must tap it for camera permission)
+    document.getElementById("startScannerBtn").style.display = "block";
+  }
 
-      if (product) {
-        resultDiv.innerHTML = `
-          <h2 style="color:#2E7D32; margin-bottom:0.5rem;">${product.name}</h2>
-          ${product.image ? `<img src="${product.image}" alt="${product.name}" style="max-width:200px;">` : ""}
-          <p><strong>Facility:</strong> ${product.facility}</p>
-          <p><strong>Treatment date:</strong> ${product.date}</p>
-          <p><span class="result-badge">${product.dose}</span> <span class="result-badge">${product.purpose}</span></p>
-          <p><strong>New shelf life:</strong> ${product.shelfLife}</p>
-          <p style="color:#1B5E20; font-weight:600;">${product.safety}</p>
-          <div class="impact-line">
-            <span class="impact-tag">🦠 ${product.bacteriaKilled} bacteria killed</span>
-            <span class="impact-tag">🗑️ ${product.wasteReduced} waste reduced</span>
-            <span class="impact-tag">🌍 ${product.co2Saved} CO₂ saved</span>
-          </div>
-          <p style="margin-top:1rem;"><small>✅ Verified by CNEN – Brazilian Nuclear Energy Commission</small></p>
-          <div class="barcode-number-big">${code}</div>
-        `;
-      } else {
-        resultDiv.innerHTML = `
-          <h2 style="color:#E65100; margin-bottom:0.5rem;">⚠️ Unknown Product</h2>
-          <div class="barcode-number-big">${code}</div>
-          <p class="warning">This barcode is not recognized in the FoodSafe Brazil database.</p>
-          <p style="color:#546E7A;">If you believe this product has been irradiated, please check the packaging for the official FoodSafe logo or contact the retailer.</p>
-          <p style="margin-top:1rem;"><small>FoodSafe Brazil – ensuring transparency in irradiated food</small></p>
-        `;
-      }
+  // Event listeners
+  document.getElementById("startScannerBtn").addEventListener("click", startScanner);
+  document.getElementById("stopScanner").addEventListener("click", () => {
+    if (scannerRunning) {
+      html5QrCode.stop().then(() => {
+        scannerRunning = false;
+        document.getElementById("reader").style.display = "none";
+        document.getElementById("stopScanner").style.display = "none";
+        document.getElementById("switchCameraBtn").style.display = "none";
+        document.getElementById("startScannerBtn").style.display = "block";
+      });
     }
-  </script>
+  });
+  document.getElementById("switchCameraBtn").addEventListener("click", switchCamera);
+
+  function lookupProduct(code) {
+    code = String(code).trim();
+    const resultDiv = document.getElementById("result");
+    const product = productDB[code];
+
+    resultDiv.style.display = "block";
+
+    if (product) {
+      resultDiv.innerHTML = `
+        <h2 style="color:#2E7D32; margin-bottom:0.5rem;">${product.name}</h2>
+        ${product.image ? `<img src="${product.image}" alt="${product.name}" style="max-width:200px;">` : ""}
+        <p><strong>Facility:</strong> ${product.facility}</p>
+        <p><strong>Treatment date:</strong> ${product.date}</p>
+        <p><span class="result-badge">${product.dose}</span> <span class="result-badge">${product.purpose}</span></p>
+        <p><strong>New shelf life:</strong> ${product.shelfLife}</p>
+        <p style="color:#1B5E20; font-weight:600;">${product.safety}</p>
+        <div class="impact-line">
+          <span class="impact-tag">🦠 ${product.bacteriaKilled} bacteria killed</span>
+          <span class="impact-tag">🗑️ ${product.wasteReduced} waste reduced</span>
+          <span class="impact-tag">🌍 ${product.co2Saved} CO₂ saved</span>
+        </div>
+        <p style="margin-top:1rem;"><small>✅ Verified by CNEN – Brazilian Nuclear Energy Commission</small></p>
+        <div class="barcode-number-big">${code}</div>
+        <button class="scan-again-btn" onclick="scanAgain()">🔍 Scan Another Product</button>
+      `;
+    } else {
+      resultDiv.innerHTML = `
+        <h2 style="color:#E65100; margin-bottom:0.5rem;">⚠️ Unknown Product</h2>
+        <div class="barcode-number-big">${code}</div>
+        <p class="warning">This barcode is not recognized in the FoodSafe Brazil database.</p>
+        <p style="color:#546E7A;">If you believe this product has been irradiated, please check the packaging for the official FoodSafe logo or contact the retailer.</p>
+        <p style="margin-top:1rem;"><small>FoodSafe Brazil – ensuring transparency in irradiated food</small></p>
+        <button class="scan-again-btn" onclick="scanAgain()">🔍 Scan Another Product</button>
+      `;
+    }
+  }
+</script>
 </body>
 </html>

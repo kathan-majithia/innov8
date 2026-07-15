@@ -218,6 +218,19 @@ footer {
   color: #455A64;
 }
 
+.scan-again-btn {
+  display: block;
+  margin: 1.5rem auto 0;
+  background: #2E7D32;
+  color: white;
+  border: none;
+  padding: 0.7rem 2rem;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 /* ========== RESPONSIVENESS ========== */
 /* ========== RESPONSIVE NAVBAR FIX ========== */
 @media (max-width: 768px) {
