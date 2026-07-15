@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Scan – FoodSafe Brazil</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .scanner-hero {
+      text-align: center;
+      padding: 3rem 1.5rem 1.5rem;
+      background: white;
+      border-bottom: 1px solid #E0E0E0;
+    }
+    .scanner-hero h1 {
+      color: #1B5E20;
+      font-size: 2rem;
+    }
+    #reader {
+      width: 100%;
+      max-width: 500px;
+      margin: 2rem auto;
+      border: 2px solid #E0E0E0;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .manual-section {
+      text-align: center;
+      margin: 1.5rem auto;
+      max-width: 400px;
+    }
+    .manual-section input {
+      padding: 0.7rem 1rem;
+      border: 1px solid #B0BEC5;
+      border-radius: 30px;
+      width: 70%;
+      font-size: 1rem;
+      margin-right: 0.5rem;
+    }
+    .manual-section button {
+      background: #2E7D32;
+      color: white;
+      border: none;
+      padding: 0.7rem 1.4rem;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .manual-section button:hover {
+      background: #1B5E20;
+    }
+    #result {
+      display: none;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      text-align: left;
+    }
+    #result img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+    .result-badge {
+      display: inline-block;
+      background: #E8F5E9;
+      color: #2E7D32;
+      padding: 0.3rem 1rem;
+      border-radius: 20px;
+      font-weight: 600;
+      margin: 0.3rem 0.2rem;
+    }
+    .impact-line {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+    .impact-tag {
+      background: #FFF3E0;
+      color: #E65100;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .stop-btn {
+      display: block;
+      margin: 1rem auto;
+      background: #F9A825;
+      color: #1B5E20;
+      border: none;
+      padding: 0.5rem 1.5rem;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2" width="28" height="28">
+        <path d="M12 2C12 2 4 7 4 14c0 5.5 8 8 8 8s8-2.5 8-8c0-7-8-12-8-12z"/>
+        <path d="M9 12l2 2 4-4" stroke="#F9A825" stroke-width="2.5"/>
+      </svg>
+      FoodSafe Brazil
+    </div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="learn.html">Learn</a>
+      <a href="about.html">About</a>
+      <a href="scan.html" class="cta-button active">Scan</a>
+    </div>
+  </nav>
+
+  <!-- SCANNER HERO -->
+  <section class="scanner-hero">
+    <h1>Scan a product</h1>
+    <p class="subtitle" style="max-width:500px; margin:0 auto;">
+      Point your camera at the barcode on any irradiated food package.
+    </p>
+  </section>
+
+  <!-- CAMERA VIEWFINDER -->
+  <div id="reader"></div>
+  <button id="stopScanner" class="stop-btn" style="display:none;">Stop Scanner</button>
+
+  <!-- MANUAL FALLBACK -->
+  <div class="manual-section">
+    <input type="text" id="manualInput" placeholder="Enter barcode (e.g., 7891234567890)">
+    <button onclick="lookupProduct(document.getElementById('manualInput').value)">Check</button>
+  </div>
+
+  <!-- RESULT CARD -->
+  <div id="result"></div>
+
+  <!-- FOOTER (simplified) -->
+  <footer style="margin-top: 2rem;">
+    <p>© 2026 FoodSafe Brazil – A MEPhI HackAtom Project</p>
+  </footer>
+
+  <!-- Scripts: local library, data, and scanner logic -->
+  <script src="assets/js/html5-qrcode.min.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script>
+    const html5QrCode = new Html5Qrcode("reader");
+    const config = { fps: 10, qrbox: { width: 250, height: 150 } };
+
+    function onScanSuccess(decodedText, decodedResult) {
+      // Stop scanning after successful decode
+      html5QrCode.stop().then(() => {
+        document.getElementById("stopScanner").style.display = "none";
+        lookupProduct(decodedText);
+      }).catch(err => console.log(err));
+    }
+
+    function startScanner() {
+      document.getElementById("stopScanner").style.display = "block";
+      html5QrCode.start(
+        { facingMode: "environment" }, // rear camera
+        config,
+        onScanSuccess,
+        (errorMessage) => { /* ignore scan errors */ }
+      ).catch(err => {
+        alert("Camera access denied or not available. Please use manual entry.");
+        document.getElementById("stopScanner").style.display = "none";
+      });
+    }
+
+    // Stop button
+    document.getElementById("stopScanner").addEventListener("click", () => {
+      html5QrCode.stop().then(() => {
+        document.getElementById("stopScanner").style.display = "none";
+      });
+    });
+
+    function lookupProduct(code) {
+      const resultDiv = document.getElementById("result");
+      const product = productDB[code];
+      if (product) {
+        resultDiv.style.display = "block";
+        resultDiv.innerHTML = `
+          <h2 style="color:#2E7D32; margin-bottom:0.5rem;">${product.name}</h2>
+          ${product.image ? `<img src="${product.image}" alt="${product.name}" style="max-width:200px;">` : ""}
+          <p><strong>Facility:</strong> ${product.facility}</p>
+          <p><strong>Treatment date:</strong> ${product.date}</p>
+          <p><span class="result-badge">${product.dose}</span> <span class="result-badge">${product.purpose}</span></p>
+          <p><strong>New shelf life:</strong> ${product.shelfLife}</p>
+          <p style="color:#1B5E20; font-weight:600;">${product.safety}</p>
+          <div class="impact-line">
+            <span class="impact-tag">🦠 ${product.bacteriaKilled} bacteria killed</span>
+            <span class="impact-tag">🗑️ ${product.wasteReduced} waste reduced</span>
+            <span class="impact-tag">🌍 ${product.co2Saved} CO₂ saved</span>
+          </div>
+          <p style="margin-top:1rem;"><small>✅ Verified by CNEN – Brazilian Nuclear Energy Commission</small></p>
+        `;
+      } else {
+        resultDiv.style.display = "block";
+        resultDiv.innerHTML = `<p style="color:red;">Product not found in database. If this is a FoodSafe product, please contact support.</p>`;
+      }
+    }
+
+    // Auto‑start scanner when page loads
+    window.addEventListener('load', startScanner);
+  </script>
+</body>
+</html>

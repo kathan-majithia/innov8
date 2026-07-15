@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Learn – FoodSafe Brazil</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* Page‑specific styles that extend the main stylesheet */
+    .learn-hero {
+      text-align: center;
+      padding: 4rem 1.5rem 2rem;
+      background: white;
+      border-bottom: 1px solid #E0E0E0;
+    }
+    .learn-hero h1 {
+      color: #1B5E20;
+      font-size: clamp(2rem, 5vw, 2.5rem);
+      margin-bottom: 0.5rem;
+    }
+    .learn-content {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+    .faq {
+      margin-top: 2rem;
+    }
+    .faq h2 {
+      color: #1B5E20;
+      margin-bottom: 1.5rem;
+    }
+    .faq-item {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .faq-item h3 {
+      color: #2E7D32;
+      margin-bottom: 0.5rem;
+    }
+    .faq-item p {
+      color: #455A64;
+      line-height: 1.6;
+    }
+    .illustration-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      margin: 2rem 0;
+    }
+    .illustration-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.8rem 1.2rem;
+      text-align: center;
+      flex: 1 1 200px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+    .illustration-card .icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2" width="28" height="28">
+        <path d="M12 2C12 2 4 7 4 14c0 5.5 8 8 8 8s8-2.5 8-8c0-7-8-12-8-12z"/>
+        <path d="M9 12l2 2 4-4" stroke="#F9A825" stroke-width="2.5"/>
+      </svg>
+      FoodSafe Brazil
+    </div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="learn.html" class="active">Learn</a>
+      <a href="about.html">About</a>
+      <a href="scan.html" class="cta-button">Scan</a>
+    </div>
+  </nav>
+
+  <!-- LEARN HERO -->
+  <section class="learn-hero">
+    <h1>How food irradiation works</h1>
+    <p class="subtitle" style="max-width:600px; margin:0 auto;">
+      The same science that powers space missions keeps your food fresh and safe.
+    </p>
+  </section>
+
+  <!-- ILLUSTRATION STEPS -->
+  <div class="learn-content">
+    <div class="illustration-grid">
+      <div class="illustration-card">
+        <div class="icon">📦</div>
+        <h3>1. Packaged food enters</h3>
+        <p>Already sealed in its final packaging – no re‑contamination possible.</p>
+      </div>
+      <div class="illustration-card">
+        <div class="icon">⚡</div>
+        <h3>2. Energy beam passes through</h3>
+        <p>Electron beams or X‑rays break the DNA of bacteria and insects.</p>
+      </div>
+      <div class="illustration-card">
+        <div class="icon">✅</div>
+        <h3>3. Food remains unchanged</h3>
+        <p>No chemical residues, no radioactivity – just clean, long‑lasting food.</p>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="faq">
+      <h2>Common questions</h2>
+      <div class="faq-item">
+        <h3>Does irradiated food become radioactive?</h3>
+        <p>No. The energy only passes through the food; it does not leave any residue. The food never touches a radioactive source.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Does irradiation change the taste or nutrition?</h3>
+        <p>At the low doses used for fruits and vegetables, taste and nutrition remain virtually unchanged. Even at higher doses for spices, the effect is far less than cooking.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Is irradiated food safe for everyone?</h3>
+        <p>Yes. The World Health Organization, the IAEA, and over 60 countries have endorsed irradiation as a safe and effective method.</p>
+      </div>
+      <div class="faq-item">
+        <h3>How does this help farmers in Brazil?</h3>
+        <p>It drastically reduces post‑harvest losses – mangoes that used to rot in transit now survive weeks longer without cold storage, reaching new export markets.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 FoodSafe Brazil – A MEPhI HackAtom Project · Russia–Brazil Nuclear Cooperation</p>
+    <div class="badges">
+      <span class="badge">IAEA Endorsed</span>
+      <span class="badge">WHO Safe</span>
+      <span class="badge">CNEN Licensed</span>
+    </div>
+  </footer>
+</body>
+</html>
