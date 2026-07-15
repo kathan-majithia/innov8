@@ -12,7 +12,7 @@ const productDB = {
     co2Saved: "12 kg per crate",
     safety: "✅ Safe to eat. No residual radiation. WHO/FAO/IAEA approved."
   },
-  "7892345678901": {
+  "8901571006854": {
     name: "Brazilian Coffee Beans (Arabica)",
     image: "assets/images/coffee.jpg",
     facility: "FitoLimpo Irradiation Centre, Santos Port",
@@ -25,7 +25,7 @@ const productDB = {
     co2Saved: "8 kg per bag",
     safety: "✅ Safe to eat. No residual radiation."
   },
-  "7893456789012": {
+  "8901396381501": {
     name: "Frozen Beef Cuts (Picanha)",
     image: "assets/images/beef.jpg",
     facility: "FitoLimpo Irradiation Centre, Santos Port",
