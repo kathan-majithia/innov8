@@ -23,6 +23,38 @@
       border: 2px solid #E0E0E0;
       border-radius: 12px;
       overflow: hidden;
+      display: none;
+    }
+    .start-btn {
+      display: block;
+      margin: 1.5rem auto;
+      background: #F9A825;
+      color: #1B5E20;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 40px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(249,168,37,0.3);
+    }
+    .stop-btn, .switch-btn {
+      display: block;
+      margin: 0.5rem auto;
+      padding: 0.5rem 1.5rem;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .stop-btn {
+      background: #FF5252;
+      color: white;
+      border: none;
+    }
+    .switch-btn {
+      background: #E0E0E0;
+      color: #455A64;
+      border: none;
     }
     .manual-section {
       text-align: center;
@@ -45,9 +77,6 @@
       border-radius: 30px;
       font-weight: 600;
       cursor: pointer;
-    }
-    .manual-section button:hover {
-      background: #1B5E20;
     }
     #result {
       display: none;
@@ -88,21 +117,23 @@
       font-size: 0.9rem;
       font-weight: 600;
     }
-    .stop-btn {
-      display: block;
-      margin: 1rem auto;
-      background: #F9A825;
-      color: #1B5E20;
-      border: none;
-      padding: 0.5rem 1.5rem;
-      border-radius: 20px;
+    .barcode-number-big {
+      font-family: monospace;
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+      background: #F5F5F5;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      display: inline-block;
+      margin: 0.5rem 0;
+    }
+    .warning {
+      color: #E65100;
       font-weight: 600;
-      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <!-- NAVBAR -->
   <nav class="navbar">
     <div class="logo">
       <svg viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2" width="28" height="28">
@@ -119,7 +150,6 @@
     </div>
   </nav>
 
-  <!-- SCANNER HERO -->
   <section class="scanner-hero">
     <h1>Scan a product</h1>
     <p class="subtitle" style="max-width:500px; margin:0 auto;">
@@ -127,64 +157,118 @@
     </p>
   </section>
 
-  <!-- CAMERA VIEWFINDER -->
-  <div id="reader"></div>
-  <button id="stopScanner" class="stop-btn" style="display:none;">Stop Scanner</button>
+  <button id="startScannerBtn" class="start-btn">📷 Start Scanner</button>
 
-  <!-- MANUAL FALLBACK -->
+  <div id="reader"></div>
+  <div style="text-align:center;">
+    <button id="stopScanner" class="stop-btn" style="display:none;">Stop Scanner</button>
+    <button id="switchCameraBtn" class="switch-btn" style="display:none;">🔄 Switch Camera</button>
+  </div>
+
   <div class="manual-section">
     <input type="text" id="manualInput" placeholder="Enter barcode (e.g., 7891234567890)">
     <button onclick="lookupProduct(document.getElementById('manualInput').value)">Check</button>
   </div>
 
-  <!-- RESULT CARD -->
   <div id="result"></div>
 
-  <!-- FOOTER (simplified) -->
   <footer style="margin-top: 2rem;">
     <p>© 2026 FoodSafe Brazil – A MEPhI HackAtom Project</p>
   </footer>
 
-  <!-- Scripts: local library, data, and scanner logic -->
   <script src="assets/js/html5-qrcode.min.js"></script>
   <script src="assets/js/data.js"></script>
   <script>
     const html5QrCode = new Html5Qrcode("reader");
-    const config = { fps: 10, qrbox: { width: 250, height: 150 } };
+    let scannerRunning = false;
+    let currentFacingMode = "environment"; // start with rear, fallback to user
+
+    // Toggle between user and environment
+    function switchCamera() {
+      if (scannerRunning) {
+        html5QrCode.stop().then(() => {
+          scannerRunning = false;
+          currentFacingMode = (currentFacingMode === "environment") ? "user" : "environment";
+          startScannerWithMode(currentFacingMode);
+        });
+      } else {
+        currentFacingMode = (currentFacingMode === "environment") ? "user" : "environment";
+        startScannerWithMode(currentFacingMode);
+      }
+    }
 
     function onScanSuccess(decodedText, decodedResult) {
-      // Stop scanning after successful decode
-      html5QrCode.stop().then(() => {
-        document.getElementById("stopScanner").style.display = "none";
-        lookupProduct(decodedText);
-      }).catch(err => console.log(err));
+      if (scannerRunning) {
+        html5QrCode.stop().then(() => {
+          scannerRunning = false;
+          document.getElementById("reader").style.display = "none";
+          document.getElementById("stopScanner").style.display = "none";
+          document.getElementById("switchCameraBtn").style.display = "none";
+          lookupProduct(decodedText);
+        });
+      }
+    }
+
+    function startScannerWithMode(facingMode) {
+      const readerDiv = document.getElementById("reader");
+      readerDiv.style.display = "block";
+      document.getElementById("stopScanner").style.display = "inline-block";
+      document.getElementById("switchCameraBtn").style.display = "inline-block";
+      document.getElementById("startScannerBtn").style.display = "none";
+
+      html5QrCode.start(
+        { facingMode: facingMode },
+        { fps: 10, qrbox: { width: 250, height: 150 } },
+        onScanSuccess,
+        (errorMessage) => { /* ignore */ }
+      ).then(() => {
+        scannerRunning = true;
+      }).catch(err => {
+        // If requested camera fails, try the other one if not already tried
+        if (facingMode === "environment") {
+          // Fallback to user camera
+          console.warn("Environment camera not available, trying user camera...");
+          currentFacingMode = "user";
+          html5QrCode.stop().finally(() => {
+            startScannerWithMode("user");
+          });
+        } else {
+          // Both failed, show error
+          alert("No camera found. Please make sure your device has a camera and permissions are granted. You can use manual entry below.");
+          readerDiv.style.display = "none";
+          document.getElementById("stopScanner").style.display = "none";
+          document.getElementById("switchCameraBtn").style.display = "none";
+          document.getElementById("startScannerBtn").style.display = "block";
+        }
+      });
     }
 
     function startScanner() {
-      document.getElementById("stopScanner").style.display = "block";
-      html5QrCode.start(
-        { facingMode: "environment" }, // rear camera
-        config,
-        onScanSuccess,
-        (errorMessage) => { /* ignore scan errors */ }
-      ).catch(err => {
-        alert("Camera access denied or not available. Please use manual entry.");
-        document.getElementById("stopScanner").style.display = "none";
-      });
+      // Try environment first
+      startScannerWithMode("environment");
     }
 
-    // Stop button
+    document.getElementById("startScannerBtn").addEventListener("click", startScanner);
     document.getElementById("stopScanner").addEventListener("click", () => {
-      html5QrCode.stop().then(() => {
-        document.getElementById("stopScanner").style.display = "none";
-      });
+      if (scannerRunning) {
+        html5QrCode.stop().then(() => {
+          scannerRunning = false;
+          document.getElementById("reader").style.display = "none";
+          document.getElementById("stopScanner").style.display = "none";
+          document.getElementById("switchCameraBtn").style.display = "none";
+          document.getElementById("startScannerBtn").style.display = "block";
+        });
+      }
     });
+    document.getElementById("switchCameraBtn").addEventListener("click", switchCamera);
 
     function lookupProduct(code) {
       const resultDiv = document.getElementById("result");
       const product = productDB[code];
+
+      resultDiv.style.display = "block";
+
       if (product) {
-        resultDiv.style.display = "block";
         resultDiv.innerHTML = `
           <h2 style="color:#2E7D32; margin-bottom:0.5rem;">${product.name}</h2>
           ${product.image ? `<img src="${product.image}" alt="${product.name}" style="max-width:200px;">` : ""}
@@ -199,15 +283,18 @@
             <span class="impact-tag">🌍 ${product.co2Saved} CO₂ saved</span>
           </div>
           <p style="margin-top:1rem;"><small>✅ Verified by CNEN – Brazilian Nuclear Energy Commission</small></p>
+          <div class="barcode-number-big">${code}</div>
         `;
       } else {
-        resultDiv.style.display = "block";
-        resultDiv.innerHTML = `<p style="color:red;">Product not found in database. If this is a FoodSafe product, please contact support.</p>`;
+        resultDiv.innerHTML = `
+          <h2 style="color:#E65100; margin-bottom:0.5rem;">⚠️ Unknown Product</h2>
+          <div class="barcode-number-big">${code}</div>
+          <p class="warning">This barcode is not recognized in the FoodSafe Brazil database.</p>
+          <p style="color:#546E7A;">If you believe this product has been irradiated, please check the packaging for the official FoodSafe logo or contact the retailer.</p>
+          <p style="margin-top:1rem;"><small>FoodSafe Brazil – ensuring transparency in irradiated food</small></p>
+        `;
       }
     }
-
-    // Auto‑start scanner when page loads
-    window.addEventListener('load', startScanner);
   </script>
 </body>
 </html>
